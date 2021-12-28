@@ -1,0 +1,1 @@
+docker build -t mini_api -f Dockerfile.dev .
