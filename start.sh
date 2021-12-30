@@ -1,1 +1,1 @@
-docker run -d --name mycontainer -p 80:80 myimage1
+docker run -d --name mini_api -p 80:80 myimage1

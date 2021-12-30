@@ -1,1 +1,1 @@
-docker build -t myimage1 .
+docker build -t mini_api .
