@@ -1,22 +1,21 @@
-from typing_extensions import Concatenate
+import os
 import yaml
 from fastapi import FastAPI
 from todoBackend.controllers import TodoController
 
-# config = "It's works"
-
-# with open(r'/todo-backend/config.yml') as file:
-#     config = yaml.load(file, Loader=yaml.FullLoader)
+cwd = os.getcwd()
+config_file_path = cwd+'/config.yml'
+file = open(config_file_path, "r")
+config = yaml.load(file, Loader=yaml.FullLoader)
 
 
 app = FastAPI()
-
 app.include_router(TodoController.router)
 
 @app.get("/")
 async def root():
-    return {"message": "defaultMessage"}
+    return {"message": config["defaultMessage"]}
 
 @app.get("/version/")
 async def root():
-    return {"version": "version"}
+    return {"version": config["version"]}
