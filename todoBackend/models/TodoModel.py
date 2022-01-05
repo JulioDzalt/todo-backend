@@ -11,6 +11,6 @@ class TodoModel(Base):
     title = Column(String)
     description = Column(String)
 
-    # def __init__(self, title, description): #Constructor
-    #     self.title = title
-    #     self.description = description
+    def __init__(self, title, description): #Constructor
+        self.title = title
+        self.description = description
