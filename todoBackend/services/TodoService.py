@@ -3,7 +3,11 @@ from fastapi import Depends
 from typing import List
 from sqlalchemy.orm import Session
 
-from ..db.db import SessionLocal
+from ..db.db import SessionLocal, engine
+
+from ..models import TodoModel
+
+TodoModel.Base.metadata.create_all(bind=engine)
 
 # Dependency
 def get_db():
@@ -19,7 +23,7 @@ class TodoService:
     #     self.id = id
 
 
-    def getAllTodos(self, db: Session = Depends(get_db)) -> List[TodoModel]:
+    def getAllTodos(db: Session = Depends(get_db)):
         # lstTodos = [TodoModel("1","1"), TodoModel("2","2"),]
         # return {"data": lstTodos}
 

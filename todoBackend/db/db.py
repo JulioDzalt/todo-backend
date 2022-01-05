@@ -9,16 +9,19 @@ from sqlalchemy import text
 MYSQL_HOST = os.getenv('MYSQL_HOST')
 print(MYSQL_HOST)
 
-SQLALCHEMY_DATABASE_URL = "mysql+pymysql://root:root@"+MYSQL_HOST+"/todos"
+SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://root:root@"+MYSQL_HOST+"/todos"
 
-engine = create_engine(SQLALCHEMY_DATABASE_URL, echo = True)
-with engine.connect() as connection:
-    result = connection.execute(text("select * from todos"))
-    print(result)
-    for row in result:
-        print("id:", row['id'])
-        print("title:", row['title'])
-        print("title:", row['description'])
+# engine = create_engine(SQLALCHEMY_DATABASE_URL, echo = True)
+# with engine.connect() as connection:
+#     result = connection.execute(text("select * from todos"))
+#     print(result)
+#     for row in result:
+#         print("id:", row['id'])
+#         print("title:", row['title'])
+#         print("title:", row['description'])
+
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
+
         
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
