@@ -6,22 +6,19 @@ from ..models.TodoModel import TodoModel
 
 TodoModelFile.Base.metadata.create_all(bind=engine)
 
-def get_db():
-    try:
-        db = SessionLocal()
-        return db
-    finally:
-        db.close()
-
 class TodoService:
 
     # def __init__(self, id): #Constructor
     #     self.id = id
 
-    def getAllTodos(self, db = get_db()):
+    def getAllTodos(self):
+        db = SessionLocal()
         todos = db.query(TodoModel).all()
+        db.close()
         return todos
 
-    def getTodosById(self, todo_id, db = get_db()):
-        todos = db.query(TodoModel).get(todo_id)    
+    def getTodosById(self, todo_id):
+        db = SessionLocal()
+        todos = db.query(TodoModel).get(todo_id)
+        db.close() 
         return todos
