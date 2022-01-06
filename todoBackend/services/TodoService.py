@@ -23,7 +23,9 @@ class TodoService:
         return todos
 
     def saveTodo(self, todo_schema):
-        todo = TodoModel(todo_schema.title, todo_schema.description)
+        todo = TodoModel()
+        todo.title = todo_schema.title
+        todo.description = todo_schema.description
         db = SessionLocal()
         db.add(todo)
         db.commit()
@@ -39,7 +41,7 @@ class TodoService:
             todo = db.query(TodoModel).filter_by(id=todo_schema.id).first()
             if todo is not None:
                 todo.title = todo_schema.title
-                todo.title = todo_schema.description
+                todo.description = todo_schema.description
                 db.commit()
                 db.refresh(todo) 
         db.close()
