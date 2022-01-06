@@ -1,7 +1,5 @@
-from sqlalchemy.sql.operators import isnot
+from fastapi import HTTPException
 from ..db.db import SessionLocal, engine
-from fastapi.params import Depends
-from sqlalchemy.orm import Session
 from ..models import TodoModel as TodoModelFile
 from ..models.TodoModel import TodoModel
 
@@ -31,6 +29,24 @@ class TodoService:
         db.commit()
         db.refresh(todo) 
         db.close()
+        return todo
+        
+    def updateTodo(self, todo_schema):
+        
+        db = SessionLocal()
+        todo = None
+        if todo_schema.id is not None:
+            todo = db.query(TodoModel).filter_by(id=todo_schema.id).first()
+            if todo is not None:
+                todo.title = todo_schema.title
+                todo.title = todo_schema.description
+                db.commit()
+                db.refresh(todo) 
+        db.close()
+        
+        if todo is None:
+            raise HTTPException(status_code=404, detail="Todo not found")
+        
         return todo
 
     def deleteTodoById(self, todo_id):
