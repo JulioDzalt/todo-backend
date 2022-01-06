@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from typing import List
+
 from ..db.TodoSchema import TodoSchema
 from ..services.TodoService import TodoService
 from ..db.db import SessionLocal, engine
@@ -16,3 +17,7 @@ async def getAllTodos():
 async def getTodosById(todo_id:int):
     return service.getTodosById(todo_id)
     
+@router.post("/", response_model=TodoSchema)
+async def saveTodo(todo_schema:TodoSchema):
+    todo_saved = service.saveTodo(todo_schema)
+    return todo_saved 

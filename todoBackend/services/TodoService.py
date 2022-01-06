@@ -22,3 +22,12 @@ class TodoService:
         todos = db.query(TodoModel).get(todo_id)
         db.close() 
         return todos
+
+    def saveTodo(self, todo_schema):
+        todo = TodoModel(todo_schema.title, todo_schema.description)
+        db = SessionLocal()
+        db.add(todo)
+        db.commit()
+        db.refresh(todo) 
+        db.close()
+        return todo
