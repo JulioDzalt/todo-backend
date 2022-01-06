@@ -24,7 +24,7 @@ async def saveTodo(todo_schema:TodoSchema):
     todo_saved = service.saveTodo(todo_schema)
     return todo_saved 
 
-@router.delete("/{todo_id}", response_model=TodoSchema)
+@router.delete("/{todo_id}")
 async def deleteTodoById(todo_id:int):
     return service.deleteTodoById(todo_id)
 
