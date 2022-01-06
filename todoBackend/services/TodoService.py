@@ -1,3 +1,4 @@
+from sqlalchemy.sql.operators import isnot
 from ..db.db import SessionLocal, engine
 from fastapi.params import Depends
 from sqlalchemy.orm import Session
@@ -31,3 +32,13 @@ class TodoService:
         db.refresh(todo) 
         db.close()
         return todo
+
+    def deleteTodoById(self, todo_id):
+        todo = self.getTodosById(todo_id)
+        if todo is not None:
+            db = SessionLocal()
+            db.delete(todo)
+            db.commit()
+            db.close()
+            return True
+        return False
